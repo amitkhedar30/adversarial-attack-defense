@@ -1,0 +1,14 @@
+# Core ML Libraries
+torch>=2.0.0
+torchvision
+numpy
+matplotlib
+scikit-learn
+
+# Adversarial Attack & Defense Libraries
+foolbox
+adversarial-robustness-toolbox
+cleverhans
+
+# Utilities
+tqdm
