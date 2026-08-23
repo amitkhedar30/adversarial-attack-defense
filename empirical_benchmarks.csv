@@ -1,0 +1,5 @@
+model,clean_acc,fgsm_acc,pgd10_acc,cw_l2_acc,cw_l2_avg_l2_norm
+Baseline (Standard),94.38,31.72,0.02,0.0,0.13357898592948914
+PGD Adversarial Training,82.74,55.42,49.51,,
+TRADES,81.88,57.18,52.9,,
+Gaussian Augmented (sigma=0.25),73.02,,,,
