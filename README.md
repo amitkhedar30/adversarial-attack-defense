@@ -25,12 +25,14 @@ Most course projects in this space either wrap `torchattacks`/`robustbench` arou
 
 | Model | Clean Acc | FGSM Acc | PGD-10 Acc | C&W L2 Acc | C&W Avg L2 Norm |
 |---|---|---|---|---|---|
-| Baseline (no defense) | 94.38% | 31.72% | 0.02% | 0.00% | 0.1330 |
-| PGD Adversarial Training (Madry et al. 2018) | 82.74% | 55.42% | 49.51% | -- | -- |
-| TRADES (Zhang et al. 2019) | 81.88% | 57.18% | 52.90% | -- | -- |
+| Baseline (no defense) | 94.38% | 31.72% | 0.02% | 0.00% | 0.1338 |
+| PGD Adversarial Training (Madry et al. 2018) | 82.74% | 55.42% | 49.51% | 0.00% | 0.7746 |
+| TRADES (Zhang et al. 2019) | 81.88% | 57.18% | 53.03% | 0.00% | 0.8197 |
 | Gaussian-Augmented (sigma=0.25) | 73.02% | -- | -- | -- | -- |
 
-The undefended baseline collapses completely under PGD (0.02% accuracy) and is fully broken by a correctly-tuned C&W attack (0% accuracy, achieved via 9-step binary search over the attack's trade-off constant -- a naive fixed-constant C&W implementation only fools a small fraction of images and can look deceptively like a robust result). PGD-AT reproduces Madry et al.'s published numbers within ~2%. TRADES trades a small amount of clean accuracy for a meaningfully higher PGD-10 accuracy than PGD-AT, consistent with the trade-off the TRADES paper reports.
+The undefended baseline collapses completely under PGD (0.02% accuracy) and is fully broken by C&W (0% accuracy, achieved via 9-step binary search over the attack's trade-off constant -- a naive fixed-constant C&W implementation only fools a small fraction of images and can look deceptively like a robust result). PGD-AT reproduces Madry et al.'s published numbers within ~2%. TRADES trades a small amount of clean accuracy for a meaningfully higher PGD-10 accuracy than PGD-AT, consistent with the trade-off the TRADES paper reports.
+
+C&W drives all three models to 0% accuracy, which is expected rather than a sign the defenses failed: unlike FGSM/PGD, C&W has no fixed perturbation budget -- it keeps optimizing until it finds *any* successful perturbation, however large, so 0% was always the eventual outcome regardless of defense. The metric that actually shows the defenses working is the perturbation size required to get there: baseline needed an average L2 norm of just 0.1338, while PGD-AT and TRADES required 0.7746 and 0.8197 respectively -- roughly **6x more perturbation** to fool the defended models under an attack with no epsilon constraint.
 
 ### Certified robustness (randomized smoothing, Cohen et al. 2019)
 
